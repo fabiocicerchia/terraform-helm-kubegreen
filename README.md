@@ -75,7 +75,7 @@ module "kubegreen" {
 ```hcl
 module "kubegreen" {
   source = "fabiocicerchia/kubegreen/helm"
-  
+
   values = {
     kubeGreen = {
       timezone = "UTC"
