@@ -8,10 +8,10 @@ Cloud infrastructure running 24/7 wastes both money and energy, especially for n
 
 KubeGreen addresses this by automatically sleeping workloads during off-hours, enabling:
 
-* 💰 **Cost savings** of 60-80% on non-production infrastructure
-* 🌍 **Reduced carbon footprint** by stopping unnecessary compute
-* ⚡ **Lower energy waste** without manual intervention
-* 📅 **Automated scheduling** that matches actual usage patterns
+- 💰 **Cost savings** of 60-80% on non-production infrastructure
+- 🌍 **Reduced carbon footprint** by stopping unnecessary compute
+- ⚡ **Lower energy waste** without manual intervention
+- 📅 **Automated scheduling** that matches actual usage patterns
 
 By implementing intelligent hibernation, organisations can significantly reduce their environmental impact while cutting cloud costs—a win for both sustainability and the bottom line.
 
@@ -38,20 +38,20 @@ module "kubegreen" {
 
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| `release_name` | Helm release name for KubeGreen | `string` | `"kube-green"` | no |
-| `namespace` | Kubernetes namespace for KubeGreen | `string` | `"kube-green"` | no |
-| `chart_version` | Helm chart version (empty string for latest) | `string` | `""` | no |
-| `values` | Helm values for KubeGreen deployment | `any` | `{}` | no |
+| Name            | Description                                  | Type     | Default        | Required |
+| --------------- | -------------------------------------------- | -------- | -------------- | :------: |
+| `release_name`  | Helm release name for KubeGreen              | `string` | `"kube-green"` | no       |
+| `namespace`     | Kubernetes namespace for KubeGreen           | `string` | `"kube-green"` | no       |
+| `chart_version` | Helm chart version (empty string for latest) | `string` | `""`           | no       |
+| `values`        | Helm values for KubeGreen deployment         | `any`    | `{}`           | no       |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| `namespace` | Kubernetes namespace where KubeGreen is deployed |
-| `release_name` | Helm release name of KubeGreen |
-| `chart_version` | Chart version of KubeGreen deployment |
+| Name            | Description                                      |
+| --------------- | ------------------------------------------------ |
+| `namespace`     | Kubernetes namespace where KubeGreen is deployed |
+| `release_name`  | Helm release name of KubeGreen                   |
+| `chart_version` | Chart version of KubeGreen deployment            |
 
 ## Requirements
 
