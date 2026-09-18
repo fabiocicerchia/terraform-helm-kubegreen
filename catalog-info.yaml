@@ -1,0 +1,22 @@
+# Backstage catalog entry, read by paved's scorecard plugin.
+#
+# Every check paved scores is derived from this file alone — no cluster
+# access, no CI credentials. What is absent here is absent from the score.
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: terraform-helm-kubegreen
+  description: >-
+      Terraform module to deploy KubeGreen (automated resource cleanup and pod hibernation) on Kubernetes
+      using Helm.
+  annotations:
+    github.com/project-slug: fabiocicerchia/terraform-helm-kubegreen
+    backstage.io/source-location: url:https://github.com/fabiocicerchia/terraform-helm-kubegreen/
+  links:
+    - url: https://github.com/fabiocicerchia/terraform-helm-kubegreen
+      title: Source
+spec:
+  type: library
+  lifecycle: production
+  owner: group:default/kodebeat
+  system: oss-tools
