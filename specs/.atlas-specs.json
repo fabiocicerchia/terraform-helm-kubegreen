@@ -1,0 +1,444 @@
+{
+ "excluded": {
+  "examples/examples": [
+   {
+    "candidate": "The sample requires Terraform >= 1.0",
+    "covered_by": "configuration/compatibility (module versions.tf declares the same required_version)",
+    "reason": "DUPLICATE_OF",
+    "source": "examples/main.tf#terraform"
+   },
+   {
+    "candidate": "The sample re-exports the module's namespace, release name and chart version as outputs",
+    "covered_by": "not among this module's listed source files; belongs to configuration/deployment-outputs",
+    "reason": "UNVERIFIABLE",
+    "source": "examples/outputs.tf"
+   },
+   {
+    "candidate": "make test runs init -backend=false and validate on the examples",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#test"
+   },
+   {
+    "candidate": "The sample installs kube-green as release \"kubegreen\" in namespace \"kubegreen-system\" on the latest chart",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "examples/main.tf#module.kubegreen"
+   },
+   {
+    "candidate": "The sample's empty values override reaches Helm as a quoted string, not as an empty map",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "examples/main.tf#module.kubegreen"
+   }
+  ],
+  "examples/outputs": [
+   {
+    "candidate": "The module's own namespace/release_name/chart_version outputs (root outputs.tf)",
+    "covered_by": "kubegreen.examples.outputs-expose-deployment-details",
+    "reason": "DUPLICATE_OF",
+    "source": "outputs.tf#namespace"
+   },
+   {
+    "candidate": "Empty chart_version installs the latest chart",
+    "covered_by": "installation/chart-versioning (root module scope, not examples/outputs)",
+    "reason": "DUPLICATE_OF",
+    "source": "main.tf#kubegreen"
+   }
+  ],
+  "terraform-helm-kubegreen/makefile": [
+   {
+    "candidate": "make setup installs the pre-commit hook",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#setup"
+   },
+   {
+    "candidate": "make install runs terraform init -backend=false to download pinned providers",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#install"
+   },
+   {
+    "candidate": "make lint runs every pre-commit hook on all files",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#lint"
+   },
+   {
+    "candidate": "make format rewrites Terraform sources with terraform fmt -recursive",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#format"
+   },
+   {
+    "candidate": "make analyze runs tflint --recursive when tflint is present",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": "Makefile#analyze"
+   },
+   {
+    "candidate": "test suppresses terraform init output by redirecting to /dev/null",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "Makefile#test"
+   }
+  ],
+  "terraform-helm-kubegreen/outputs": [
+   {
+    "candidate": "Output descriptions text",
+    "covered_by": "",
+    "reason": "TRIVIAL",
+    "source": "outputs.tf#output.namespace"
+   },
+   {
+    "candidate": "Outputs are wired to the helm_release.kubegreen resource attributes",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "outputs.tf#output.release_name"
+   },
+   {
+    "candidate": "The deployed namespace and release name are reported as outputs",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "outputs.tf#output.namespace"
+   },
+   {
+    "candidate": "The deployed chart version is reported as an output",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "outputs.tf#output.chart_version"
+   }
+  ],
+  "terraform-helm-kubegreen/terraform-helm-kubegreen": [
+   {
+    "candidate": "Chart dependencies are refreshed before install (dependency_update = true)",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "main.tf#helm_release.kubegreen"
+   },
+   {
+    "candidate": "Values are serialised to YAML before being handed to Helm",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "main.tf#helm_release.kubegreen"
+   },
+   {
+    "candidate": "KubeGreen is installed from the official kube-green chart under the chosen release name",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "main.tf#helm_release.kubegreen"
+   },
+   {
+    "candidate": "KubeGreen goes into the chosen namespace, which is created when it does not exist",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "main.tf#helm_release.kubegreen"
+   },
+   {
+    "candidate": "A given chart version is pinned, and no version means the latest chart",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "main.tf#helm_release.kubegreen"
+   },
+   {
+    "candidate": "Chart values given by the operator are applied to the KubeGreen release",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "main.tf#helm_release.kubegreen"
+   },
+   {
+    "candidate": "Installing reuses a release name left behind by a deleted KubeGreen release",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "main.tf#helm_release.kubegreen"
+   }
+  ],
+  "terraform-helm-kubegreen/tflint": [
+   {
+    "candidate": "The terraform tflint plugin is enabled with the 'all' preset, so every bundled terraform rule runs",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": ".tflint.hcl#plugin \"terraform\""
+   },
+   {
+    "candidate": "Lint fails when the module does not declare a required Terraform version or required providers (FC-TF-006)",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": ".tflint.hcl#rule \"terraform_required_version\""
+   },
+   {
+    "candidate": "Lint fails when a variable has no description or no type (FC-TF-003)",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": ".tflint.hcl#rule \"terraform_documented_variables\""
+   },
+   {
+    "candidate": "Lint fails when an output has no description (FC-TF-005)",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": ".tflint.hcl#rule \"terraform_documented_outputs\""
+   },
+   {
+    "candidate": "Lint fails when a block name is not snake_case (FC-TF-011)",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": ".tflint.hcl#rule \"terraform_naming_convention\""
+   },
+   {
+    "candidate": "Lint fails on unused variables, locals or data sources",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": ".tflint.hcl#rule \"terraform_unused_declarations\""
+   },
+   {
+    "candidate": "Lint fails when a module source is not pinned to a version (FC-TF-006)",
+    "covered_by": "",
+    "reason": "TECH_BUILD",
+    "source": ".tflint.hcl#rule \"terraform_module_pinned_source\""
+   }
+  ],
+  "terraform-helm-kubegreen/variables": [
+   {
+    "candidate": "Inputs are declared with description and type (string/any)",
+    "covered_by": "",
+    "reason": "TECH_DEVTOOLING",
+    "source": "variables.tf#release_name"
+   },
+   {
+    "candidate": "No validation of release name / namespace format inside the module",
+    "covered_by": "",
+    "reason": "UNVERIFIABLE",
+    "source": "variables.tf#namespace"
+   },
+   {
+    "candidate": "Per-input default permutations (each default stated separately)",
+    "covered_by": "kubegreen.install.defaults-when-inputs-omitted",
+    "reason": "TRIVIAL",
+    "source": "variables.tf#chart_version"
+   }
+  ],
+  "terraform-helm-kubegreen/versions": [
+   {
+    "candidate": "Helm provider is fetched from the hashicorp/helm registry address",
+    "covered_by": "",
+    "reason": "INTERNAL_MECHANISM",
+    "source": "versions.tf#terraform"
+   },
+   {
+    "candidate": "Comment stating OpenTofu >= 1.6 compatibility",
+    "covered_by": "compatibility.toolchain.minimum-cli-version",
+    "reason": "DUPLICATE_OF",
+    "source": "versions.tf#terraform"
+   }
+  ]
+ },
+ "lifted": {
+  "examples/examples": [],
+  "examples/outputs": [],
+  "terraform-helm-kubegreen/makefile": [],
+  "terraform-helm-kubegreen/outputs": [],
+  "terraform-helm-kubegreen/terraform-helm-kubegreen": [],
+  "terraform-helm-kubegreen/tflint": [],
+  "terraform-helm-kubegreen/variables": [],
+  "terraform-helm-kubegreen/versions": []
+ },
+ "retired": [],
+ "scenarios": {
+  "configuration.compatibility.001": {
+   "file": "specs/configuration/compatibility/tool-compatibility.feature",
+   "fingerprint": "c4352a3c0676",
+   "human": false,
+   "rule": "compatibility.toolchain.minimum-cli-version",
+   "source": "versions.tf#terraform",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "configuration.compatibility.002": {
+   "file": "specs/configuration/compatibility/tool-compatibility.feature",
+   "fingerprint": "c4352a3c0676",
+   "human": false,
+   "rule": "compatibility.toolchain.helm-provider-2-or-later",
+   "source": "versions.tf#terraform",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "configuration.usage-examples.001": {
+   "file": "specs/configuration/usage-examples/usage-example.feature",
+   "fingerprint": "d9b0ccb746cd",
+   "human": false,
+   "rule": "examples.usage.helm-provider-limited-to-2x",
+   "source": "examples/main.tf#terraform",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "configuration.usage-examples.002": {
+   "file": "specs/configuration/usage-examples/example-deployment-outputs.feature",
+   "fingerprint": "9cbec88ec376",
+   "human": false,
+   "rule": "kubegreen.examples.outputs-expose-deployment-details",
+   "source": "examples/outputs.tf#kubegreen_namespace",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "developer-tooling.task-commands.001": {
+   "file": "specs/developer-tooling/task-commands/repository-task-commands.feature",
+   "fingerprint": "517de792f113",
+   "human": false,
+   "rule": "tooling.make.default-lists-verbs",
+   "source": "Makefile#help",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "developer-tooling.task-commands.002": {
+   "file": "specs/developer-tooling/task-commands/repository-task-commands.feature",
+   "fingerprint": "4d16ff5f8f37",
+   "human": false,
+   "rule": "tooling.make.not-applicable-verbs-explain-themselves",
+   "source": "Makefile#build",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "developer-tooling.task-commands.003": {
+   "file": "specs/developer-tooling/task-commands/repository-task-commands.feature",
+   "fingerprint": "8145e195cde0",
+   "human": false,
+   "rule": "tooling.make.test-validates-module-and-examples",
+   "source": "Makefile#test",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "developer-tooling.task-commands.004": {
+   "file": "specs/developer-tooling/task-commands/repository-task-commands.feature",
+   "fingerprint": "c5311b237c3f",
+   "human": false,
+   "rule": "tooling.make.analyze-refuses-without-tflint",
+   "source": "Makefile#analyze",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "installation.release-deployment.001": {
+   "file": "specs/installation/release-deployment/kubegreen-install-inputs.feature",
+   "fingerprint": "0785411c3025",
+   "human": false,
+   "rule": "kubegreen.install.defaults-when-inputs-omitted",
+   "source": "variables.tf#release_name",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "installation.release-deployment.002": {
+   "file": "specs/installation/release-deployment/kubegreen-install-inputs.feature",
+   "fingerprint": "6c5f683c426f",
+   "human": false,
+   "rule": "kubegreen.install.custom-release-name-and-namespace",
+   "source": "variables.tf#namespace",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "installation.release-deployment.003": {
+   "file": "specs/installation/release-deployment/kubegreen-install-inputs.feature",
+   "fingerprint": "593752ae5dc8",
+   "human": false,
+   "rule": "kubegreen.install.chart-version-pinned-or-latest",
+   "source": "variables.tf#chart_version",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  },
+  "installation.release-deployment.004": {
+   "file": "specs/installation/release-deployment/kubegreen-install-inputs.feature",
+   "fingerprint": "15fbf76f6532",
+   "human": false,
+   "rule": "kubegreen.install.values-passed-to-chart",
+   "source": "variables.tf#values",
+   "status": "inferred",
+   "test": "",
+   "tests": []
+  }
+ },
+ "taxonomy": {
+  "domains": [
+   {
+    "areas": [
+     {
+      "description": "Installs or replaces the kube-green Helm chart from the official repository under a configurable release name.",
+      "slug": "release-deployment",
+      "title": "Release deployment"
+     },
+     {
+      "description": "Chooses the target namespace for KubeGreen and creates it automatically if missing.",
+      "slug": "namespace-placement",
+      "title": "Namespace placement"
+     },
+     {
+      "description": "Pins a specific kube-green chart version or follows the latest when none is given, and refreshes chart dependencies.",
+      "slug": "chart-versioning",
+      "title": "Chart versioning"
+     }
+    ],
+    "description": "Installing the kube-green controller into a Kubernetes cluster as a Helm release.",
+    "slug": "installation",
+    "title": "KubeGreen Installation"
+   },
+   {
+    "areas": [
+     {
+      "description": "Passes arbitrary Helm values through to customise the kube-green deployment.",
+      "slug": "chart-values",
+      "title": "Chart value overrides"
+     },
+     {
+      "description": "Exposes the deployed namespace, release name and chart version for use by other configuration.",
+      "slug": "deployment-outputs",
+      "title": "Deployment outputs"
+     },
+     {
+      "description": "A sample root configuration showing how to call the module and surface its outputs.",
+      "slug": "usage-examples",
+      "title": "Usage examples"
+     },
+     {
+      "description": "Declares the supported Terraform/OpenTofu and Helm provider versions.",
+      "slug": "compatibility",
+      "title": "Tool compatibility"
+     }
+    ],
+    "description": "How callers tune the deployment and consume its results.",
+    "slug": "configuration",
+    "title": "Configuration & Integration"
+   },
+   {
+    "areas": [
+     {
+      "description": "Standard make verbs for help, setup, provider install, formatting, and declared no-op build/run.",
+      "slug": "task-commands",
+      "title": "Task commands"
+     },
+     {
+      "description": "Validates the module and its examples without a backend.",
+      "slug": "validation",
+      "title": "Validation"
+     },
+     {
+      "description": "Lint gate enforcing documented, typed, snake_case and pinned declarations via tflint and pre-commit.",
+      "slug": "linting",
+      "title": "Linting & style rules"
+     }
+    ],
+    "description": "Local commands and quality gates for maintaining the module.",
+    "slug": "developer-tooling",
+    "title": "Developer Tooling"
+   }
+  ]
+ }
+}
